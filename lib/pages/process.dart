@@ -307,15 +307,17 @@ class _ProcessPageState extends State<ProcessPage>
               ),
             ),
             const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildStatCard('15K+', 'Happy Patients'),
-                const SizedBox(width: 24),
-                _buildStatCard('98%', 'Success Rate'),
-                const SizedBox(width: 24),
-                _buildStatCard('5★', 'Rating'),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _buildStatCard('15K+', 'Happy Patients'),
+                  const SizedBox(width: 24),
+                  _buildStatCard('98%', 'Success Rate'),
+                  const SizedBox(width: 24),
+                  _buildStatCard('5★', 'Rating'),
+                ],
+              ),
             ),
           ],
         ),
@@ -712,46 +714,49 @@ class _ProcessPageState extends State<ProcessPage>
       child: Column(
         children: [
           // Step indicators
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: steps.asMap().entries.map((entry) {
-              final index = entry.key;
-              final step = entry.value;
-              return GestureDetector(
-                onTap: () {
-                  setState(() => activeStep = index);
-                  _cardController.reset();
-                  _cardController.forward();
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeOut,
-                  width: index == activeStep ? 32 : 12,
-                  height: 12,
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    gradient: index == activeStep
-                        ? LinearGradient(colors: step.colors)
-                        : null,
-                    color: index == activeStep
-                        ? null
-                        : index < activeStep
-                        ? const Color(0xFF10B981)
-                        : const Color(0xFFE2E8F0),
-                    boxShadow: index == activeStep
-                        ? [
-                            BoxShadow(
-                              color: step.colors[0].withOpacity(0.4),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ]
-                        : null,
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: steps.asMap().entries.map((entry) {
+                final index = entry.key;
+                final step = entry.value;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() => activeStep = index);
+                    _cardController.reset();
+                    _cardController.forward();
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeOut,
+                    width: index == activeStep ? 32 : 12,
+                    height: 12,
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      gradient: index == activeStep
+                          ? LinearGradient(colors: step.colors)
+                          : null,
+                      color: index == activeStep
+                          ? null
+                          : index < activeStep
+                          ? const Color(0xFF10B981)
+                          : const Color(0xFFE2E8F0),
+                      boxShadow: index == activeStep
+                          ? [
+                              BoxShadow(
+                                color: step.colors[0].withOpacity(0.4),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ]
+                          : null,
+                    ),
                   ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           ),
           const SizedBox(height: 24),
           // Navigation buttons
@@ -766,15 +771,16 @@ class _ProcessPageState extends State<ProcessPage>
                         _cardController.forward();
                       }
                     : null,
-                icon: const Icon(Icons.arrow_back_rounded, size: 18),
+                icon: const Icon(Icons.arrow_back_rounded, size: 16),
                 label: const Text('Previous'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFF8FAFC),
                   foregroundColor: const Color(0xFF64748B),
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
+                    horizontal: 12,
+                    vertical: 10,
                   ),
+                  minimumSize: const Size(80, 36),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -901,21 +907,25 @@ class _ProcessPageState extends State<ProcessPage>
                 SizedBox(width: 8),
                 Text(
                   'Start Your Free Consultation',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildTrustIndicator(Icons.security_rounded, '100% Secure'),
-              const SizedBox(width: 24),
-              _buildTrustIndicator(Icons.schedule_rounded, 'Available 24/7'),
-              const SizedBox(width: 24),
-              _buildTrustIndicator(Icons.verified_rounded, 'Certified Experts'),
-            ],
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildTrustIndicator(Icons.schedule_rounded, 'Available 24/7'),
+                const SizedBox(width: 5),
+                _buildTrustIndicator(
+                  Icons.verified_rounded,
+                  'Certified Experts',
+                ),
+              ],
+            ),
           ),
         ],
       ),
